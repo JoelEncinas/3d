@@ -1,7 +1,7 @@
-var panorama, viewer, container;
-var containerBaseWidth = 560;
-var containerBaseHeight = 320;
-var deltaSize = 100;
+let panorama, viewer, container;
+let containerBaseWidth = 560;
+let containerBaseHeight = 320;
+let deltaSize = 100;
 
 container = document.querySelector("#container");
 
@@ -10,7 +10,7 @@ panorama = new PANOLENS.ImagePanorama("img/StreetView360.jpg");
 viewer = new PANOLENS.Viewer({ container: container });
 viewer.add(panorama);
 
-var map = L.map("map").setView([42.8448576, -2.6791898, 3], 13);
+let map = L.map("map").setView([42.8448576, -2.6791898, 3], 13);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution:
@@ -35,8 +35,9 @@ function onMapClick(e) {
 
 map.on("click", onMapClick);
 
+// Calculate the distance between the two coordinates in meters
+// draw circle and log accuracy
 function checkCoordinates(coordinate1, coordinate2) {
-  // Calculate the distance between the two coordinates in meters
   const R = 6371e3; // Earth's radius in meters
   const lat1 = (coordinate1.lat * Math.PI) / 180; // Convert latitudes to radians
   const lat2 = (coordinate2.lat * Math.PI) / 180;
@@ -63,10 +64,14 @@ function checkCoordinates(coordinate1, coordinate2) {
   // Create a circle marker at the coordinate
   const circleMarker = L.circleMarker(photoCoordinate, {
     radius: 35, // Set the radius of the circle
-    fillColor: "red", // Set the fill color of the circle
-    fillOpacity: 0.5, // Set the fill opacity of the circle
+    fillColor: distance < distanceDiff ? "green" : "red", // Set the fill color of the circle
+    fillOpacity: 0.3, // Set the fill opacity of the circle
     stroke: false, // Disable stroke of the circle
   }).addTo(map);
 
   L.marker(coordinate1).addTo(map);
+
+  let polyline = L.polyline([coordinate1, coordinate2], {
+    color: distance < distanceDiff ? "green" : "red",
+  }).addTo(map);
 }

@@ -9,13 +9,23 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
 
     <link rel="stylesheet" href="styles.css" />
     <title>Vitoriagsr</title>
   </head>
   <body>
-    <h1 class="text-center">Vitoria Guesser</h1>
-    <div id="container"></div>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <h1 class="text-center">Vitoria Guesser</h1>
+      <div id="container"></div>
+      <div id="map"></div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
     <script src="https://rawgit.com/pchen66/panolens.js/dev/build/panolens.min.js"></script>
     <script src="script.js"></script>

@@ -3,7 +3,7 @@ let containerBaseWidth = 560;
 let containerBaseHeight = 320;
 let deltaSize = 100;
 
-container = document.querySelector("#container");
+container = document.querySelector("#canvas-container");
 
 panorama = new PANOLENS.ImagePanorama("img/StreetView360.jpg");
 
@@ -85,3 +85,6 @@ function calculateDiff(coordinate1, coordinate2) {
 
   return distance;
 }
+
+// ads no zoom no rotation mode
+container.style.pointerEvents = "none";

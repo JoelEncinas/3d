@@ -37,6 +37,8 @@ function onMapClick(e) {
 
   // Add a marker at the clicked location
   L.marker(e.latlng).addTo(map);
+
+  map.off("click", onMapClick);
 }
 
 map.on("click", onMapClick);

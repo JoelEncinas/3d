@@ -22,8 +22,14 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 // coordinate of the photo
 const photoCoordinate = { lat: 42.8332643935435, lng: -2.7008879184722905 };
-
 const distanceDiff = 500;
+
+let circle = L.circle(photoCoordinate, {
+  radius: distanceDiff, // Set the radius of the circle
+  fillColor: "red", // Set the fill color of the circle
+  fillOpacity: 0.3, // Set the fill opacity of the circle
+  stroke: false, // Disable stroke of the circle
+});
 
 function onMapClick(e) {
   console.log(e.latlng);
@@ -34,8 +40,6 @@ function onMapClick(e) {
 }
 
 map.on("click", onMapClick);
-
-let circleMarker = null;
 
 // Calculate the distance between the two coordinates in meters
 // draw circle and log accuracy
@@ -51,12 +55,9 @@ function checkCoordinates(coordinate1, coordinate2) {
   }
 
   // Create a circle marker at the coordinate
-  circleMarker = L.circleMarker(photoCoordinate, {
-    radius: 35, // Set the radius of the circle
-    fillColor: distance < distanceDiff ? "green" : "red", // Set the fill color of the circle
-    fillOpacity: 0.3, // Set the fill opacity of the circle
-    stroke: false, // Disable stroke of the circle
-  }).addTo(map);
+  let color = distance < distanceDiff ? "green" : "red";
+  circle.setStyle({ fillColor: color });
+  circle.addTo(map);
 
   L.marker(coordinate1).addTo(map);
 
@@ -64,13 +65,6 @@ function checkCoordinates(coordinate1, coordinate2) {
     color: distance < distanceDiff ? "green" : "red",
   }).addTo(map);
 }
-
-map.on("zoomend", function () {
-  // calculate the new radius based on the current zoom level
-  var radius = 35 / Math.pow(2, map.getZoom() - 13);
-  // update the radius of the CircleMarker
-  circleMarker.setRadius(radius);
-});
 
 function calculateDiff(coordinate1, coordinate2) {
   const R = 6371e3; // Earth's radius in meters

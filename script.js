@@ -35,9 +35,44 @@ function onMapClick(e) {
 
 map.on("click", onMapClick);
 
+let circleMarker = null;
+
 // Calculate the distance between the two coordinates in meters
 // draw circle and log accuracy
 function checkCoordinates(coordinate1, coordinate2) {
+  let distance = calculateDiff(coordinate1, coordinate2);
+  // Check if the distance is less than 100 meters
+  if (distance < distanceDiff) {
+    console.log(
+      `The coordinates are within ${distanceDiff} meters of each other.`
+    );
+  } else {
+    console.log(`The coordinates are more than ${distanceDiff} meters apart.`);
+  }
+
+  // Create a circle marker at the coordinate
+  circleMarker = L.circleMarker(photoCoordinate, {
+    radius: 35, // Set the radius of the circle
+    fillColor: distance < distanceDiff ? "green" : "red", // Set the fill color of the circle
+    fillOpacity: 0.3, // Set the fill opacity of the circle
+    stroke: false, // Disable stroke of the circle
+  }).addTo(map);
+
+  L.marker(coordinate1).addTo(map);
+
+  let polyline = L.polyline([coordinate1, coordinate2], {
+    color: distance < distanceDiff ? "green" : "red",
+  }).addTo(map);
+}
+
+map.on("zoomend", function () {
+  // calculate the new radius based on the current zoom level
+  var radius = 35 / Math.pow(2, map.getZoom() - 13);
+  // update the radius of the CircleMarker
+  circleMarker.setRadius(radius);
+});
+
+function calculateDiff(coordinate1, coordinate2) {
   const R = 6371e3; // Earth's radius in meters
   const lat1 = (coordinate1.lat * Math.PI) / 180; // Convert latitudes to radians
   const lat2 = (coordinate2.lat * Math.PI) / 180;
@@ -52,26 +87,5 @@ function checkCoordinates(coordinate1, coordinate2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c;
 
-  // Check if the distance is less than 100 meters
-  if (distance < distanceDiff) {
-    console.log(
-      `The coordinates are within ${distanceDiff} meters of each other.`
-    );
-  } else {
-    console.log(`The coordinates are more than ${distanceDiff} meters apart.`);
-  }
-
-  // Create a circle marker at the coordinate
-  const circleMarker = L.circleMarker(photoCoordinate, {
-    radius: 35, // Set the radius of the circle
-    fillColor: distance < distanceDiff ? "green" : "red", // Set the fill color of the circle
-    fillOpacity: 0.3, // Set the fill opacity of the circle
-    stroke: false, // Disable stroke of the circle
-  }).addTo(map);
-
-  L.marker(coordinate1).addTo(map);
-
-  let polyline = L.polyline([coordinate1, coordinate2], {
-    color: distance < distanceDiff ? "green" : "red",
-  }).addTo(map);
+  return distance;
 }

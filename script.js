@@ -21,11 +21,13 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 // coordinate of the photo
-const coordinate1 = { lat: 42.8332643935435, lng: -2.7008879184722905 };
+const photoCoordinate = { lat: 42.8332643935435, lng: -2.7008879184722905 };
+
+const distanceDiff = 500;
 
 function onMapClick(e) {
   console.log(e.latlng);
-  checkCoordinates(coordinate1, e.latlng);
+  checkCoordinates(photoCoordinate, e.latlng);
 
   // Add a marker at the clicked location
   L.marker(e.latlng).addTo(map);
@@ -50,11 +52,21 @@ function checkCoordinates(coordinate1, coordinate2) {
   const distance = R * c;
 
   // Check if the distance is less than 100 meters
-  if (distance < 200) {
-    console.log("The coordinates are within 200 meters of each other.");
+  if (distance < distanceDiff) {
+    console.log(
+      `The coordinates are within ${distanceDiff} meters of each other.`
+    );
   } else {
-    console.log("The coordinates are more than 200 meters apart.");
+    console.log(`The coordinates are more than ${distanceDiff} meters apart.`);
   }
+
+  // Create a circle marker at the coordinate
+  const circleMarker = L.circleMarker(photoCoordinate, {
+    radius: 35, // Set the radius of the circle
+    fillColor: "red", // Set the fill color of the circle
+    fillOpacity: 0.5, // Set the fill opacity of the circle
+    stroke: false, // Disable stroke of the circle
+  }).addTo(map);
 
   L.marker(coordinate1).addTo(map);
 }

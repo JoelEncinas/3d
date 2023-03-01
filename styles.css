@@ -9,7 +9,7 @@ body {
     height: 320px;
 }
 
-#container:hover {
+#canvas-container:hover {
     cursor: grab;
 }
 

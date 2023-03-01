@@ -5,7 +5,7 @@ let deltaSize = 100;
 
 container = document.querySelector("#canvas-container");
 
-panorama = new PANOLENS.ImagePanorama("img/StreetView360.jpg");
+panorama = new PANOLENS.ImagePanorama("img/zabalgana1.jpg");
 
 viewer = new PANOLENS.Viewer({ container: container });
 viewer.add(panorama);
@@ -21,7 +21,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 // coordinate of the photo
-const photoCoordinate = { lat: 42.8332643935435, lng: -2.7008879184722905 };
+const photoCoordinate = { lat: 42.842324, lng: -2.7034618 };
 const distanceDiff = 500;
 
 let circle = L.circle(photoCoordinate, {
@@ -32,7 +32,6 @@ let circle = L.circle(photoCoordinate, {
 });
 
 function onMapClick(e) {
-  console.log(e.latlng);
   checkCoordinates(photoCoordinate, e.latlng);
 
   // Add a marker at the clicked location
@@ -87,4 +86,6 @@ function calculateDiff(coordinate1, coordinate2) {
 }
 
 // ads no zoom no rotation mode
-container.style.pointerEvents = "none";
+// container.style.pointerEvents = "none";
+
+

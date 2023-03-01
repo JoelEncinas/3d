@@ -18,3 +18,11 @@ body {
     height: 500px;
     width: 500px;
 }
+
+#map:hover {
+    cursor: crosshair;
+}
+
+#map:active {
+    cursor: grab;
+}

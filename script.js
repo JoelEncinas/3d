@@ -10,7 +10,7 @@ panorama = new PANOLENS.ImagePanorama("img/estacion_tren1.jpg");
 viewer = new PANOLENS.Viewer({ container: container });
 viewer.add(panorama);
 
-let map = L.map("map").setView([42.8448576, -2.6791898, 3], 13);
+let map = L.map("map").setView([42.8448576, -2.6791898, 3], 14);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution:

@@ -116,9 +116,9 @@ const locations = {
     },
     {
       difficulty: "easy",
-      photo: "zabalgana2",
-      lat: 42.840412,
-      lng: -2.705895,
+      photo: "judimendi1",
+      lat: 42.844163,
+      lng: -2.661459,
     },
     {
       difficulty: "medium",

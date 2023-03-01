@@ -5,7 +5,7 @@ let deltaSize = 100;
 
 container = document.querySelector("#canvas-container");
 
-panorama = new PANOLENS.ImagePanorama("img/zabalgana1.jpg");
+panorama = new PANOLENS.ImagePanorama("img/estacion_tren1.jpg");
 
 viewer = new PANOLENS.Viewer({ container: container });
 viewer.add(panorama);
@@ -21,8 +21,8 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 // coordinate of the photo
-const photoCoordinate = { lat: 42.842324, lng: -2.7034618 };
-const distanceDiff = 500;
+const photoCoordinate = { lat: 42.841684, lng: -2.672744 };
+const distanceDiff = 300;
 
 let circle = L.circle(photoCoordinate, {
   radius: distanceDiff, // Set the radius of the circle

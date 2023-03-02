@@ -1,17 +1,19 @@
 require("dotenv").config({ path: "./config.env" }); // needs to be at the top
 const express = require("express");
 const connectDB = require("./config/db");
+const errorHandler = require("./middleware/error");
 
 // connect to db
 connectDB();
 
 const app = express();
 
-// middleware
+// middleware - err handler needs to be last
 app.use(express.json());
-
 app.use("/api/auth", require("./routes/auth"));
+app.use(errorHandler);
 
+// routes
 app.get("/home", (req, res) => {
   res.send("Home");
 });

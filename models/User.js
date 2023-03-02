@@ -31,10 +31,15 @@ UserSchema.pre("save", async function (next) {
     next();
   }
 
+  // hash password and save the model
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+UserSchema.methods.matchPasswords = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 const User = mongoose.model("User", UserSchema);
 

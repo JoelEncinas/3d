@@ -11,35 +11,38 @@ exports.register = async (req, res, next) => {
       password,
     });
 
-    sendToken(user, 201, res);
-  } catch (error) {
-    next(error);
+    sendToken(user, 200, res);
+  } catch (err) {
+    next(err);
   }
 };
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
 
+  // Check if email and password is provided
   if (!email || !password) {
     return next(new ErrorResponse("Please provide an email and password", 400));
   }
 
   try {
+    // Check that user exists by email
     const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
-      return next(new ErrorResponse("Invalid Credentials", 401));
+      return next(new ErrorResponse("Invalid credentials", 401));
     }
 
-    const isMatch = await user.matchPasswords(password);
+    // Check that password match
+    const isMatch = await user.matchPassword(password);
 
     if (!isMatch) {
-      return next(new ErrorResponse("Invalid Credentials", 401));
+      return next(new ErrorResponse("Invalid credentials", 401));
     }
 
     sendToken(user, 200, res);
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -52,6 +55,6 @@ exports.resetpassword = (req, res, next) => {
 };
 
 const sendToken = (user, statusCode, res) => {
-  const token = user.getSignedToken();
-  res.status(statusCode).json({ success: true, token });
+  const token = user.getSignedJwtToken();
+  res.status(statusCode).json({ sucess: true, token });
 };

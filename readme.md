@@ -5,4 +5,7 @@
 - leaflet js & openStreetMaps
 
 ## TODO
-- implement ui logic
+- implement google + firebase login
+- basic ui for gameplay
+- timer 
+- save data to mongodb
